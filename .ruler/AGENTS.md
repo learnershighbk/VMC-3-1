@@ -6,6 +6,9 @@
 - always use promise for page.tsx params props.
 - use valid picsum.photos stock image for placeholder image
 - route feature hooks' HTTP requests through `@/lib/remote/api-client`.
+- Hono 라우트 경로는 반드시 `/api` prefix를 포함해야 함 (Next.js API 라우트가 `/api/[[...hono]]`에 위치하므로). 예: `app.post('/api/auth/signup', ...)`
+- `AppLogger`는 `info`, `error`, `warn`, `debug` 메서드만 제공함. `logger.log()` 대신 `logger.info()` 사용할 것.
+- API 응답 스키마에서 `redirectTo` 등 경로 필드는 `z.string().url()` 대신 `z.string()` 사용 (상대 경로 허용).
 
 ## Library
 
@@ -52,6 +55,7 @@ use following libraries for specific functionalities:
 ## Backend Layer (Hono + Next.js)
 
 - Next.js `app` 라우터에서 `src/app/api/[[...hono]]/route.ts` 를 통해 Hono 앱을 위임한다. 모든 HTTP 메서드는 `handle(createHonoApp())` 로 노출하며 `runtime = 'nodejs'` 로 Supabase service-role 키를 사용한다.
+- `src/backend/hono/app.ts` 의 `createHonoApp` 은 싱글턴으로 관리하되, **development 환경에서는 매번 재생성**하여 HMR 시 라우터 변경사항이 반영되도록 한다. (Singleton pattern with HMR compatibility: only cache in production to ensure route changes are reflected during hot reload)
 - `src/backend/hono/app.ts` 의 `createHonoApp` 은 싱글턴으로 관리하며 다음 빌딩블록을 순서대로 연결한다.
   1. `errorBoundary()` – 공통 에러 로깅 및 5xx 응답 정규화.
   2. `withAppContext()` – `zod` 기반 환경 변수 파싱, 콘솔 기반 logger, 설정을 `c.set` 으로 주입.
@@ -199,3 +203,5 @@ You are a senior full-stack developer, one of those rare 10x devs. Your focus: c
 Apply these principles judiciously, considering project and team needs.
 
 `example` page, table is just example.
+
+- 코드 수정 작업을 완료한 뒤 commit을 남겨주세요. message는 최근 기록을 참고해서 적절히 작성하세요.
