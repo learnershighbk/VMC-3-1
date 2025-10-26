@@ -8,7 +8,9 @@
       "Bash(npm run lint)",
       "Bash(npm run build:*)",
       "WebSearch",
-      "Bash(node -e:*)"
+      "Bash(node -e:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix: PlaceWithReviewsResponse에 category 필드 추가\n\n- schema.ts: place 객체에 category 필드 추가 (nullable)\n- service.ts: Supabase select 쿼리 및 응답 객체에 category 포함\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
