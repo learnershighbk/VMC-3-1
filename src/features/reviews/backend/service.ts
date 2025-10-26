@@ -76,7 +76,7 @@ export const getReviewsByNaverPlaceId = async (
   // 1. Place 조회
   const { data: place, error: placeError } = await client
     .from('places')
-    .select('id, naver_place_id, name, address, latitude, longitude')
+    .select('id, naver_place_id, name, address, category, latitude, longitude')
     .eq('naver_place_id', naverPlaceId)
     .maybeSingle();
 
@@ -115,6 +115,7 @@ export const getReviewsByNaverPlaceId = async (
       naverPlaceId: place.naver_place_id,
       name: place.name,
       address: place.address,
+      category: place.category,
       latitude: place.latitude,
       longitude: place.longitude,
     },

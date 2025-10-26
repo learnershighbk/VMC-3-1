@@ -49,6 +49,7 @@ export const PlaceWithReviewsResponseSchema = z.object({
     naverPlaceId: z.string(),
     name: z.string(),
     address: z.string(),
+    category: z.string().nullable(),
     latitude: z.number(),
     longitude: z.number(),
   }),
